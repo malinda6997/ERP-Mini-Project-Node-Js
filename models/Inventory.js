@@ -48,6 +48,7 @@ const inventorySchema = new mongoose.Schema(
         "Finished Goods",
         "Components",
         "Supplies",
+        "Food & Beverage",
         "Other",
       ],
       default: "Other",

@@ -27,13 +27,7 @@ exports.supplierSchema = Joi.object({
       "string.pattern.base": "Please provide a valid phone number",
       "any.required": "Phone number is required",
     }),
-  address: Joi.object({
-    street: Joi.string().allow(""),
-    city: Joi.string().allow(""),
-    state: Joi.string().allow(""),
-    country: Joi.string().allow(""),
-    postalCode: Joi.string().allow(""),
-  }),
+  address: Joi.string().allow(""),
   taxId: Joi.string().allow(""),
   paymentTerms: Joi.string()
     .valid("Net 15", "Net 30", "Net 45", "Net 60", "Due on Receipt", "Custom")
