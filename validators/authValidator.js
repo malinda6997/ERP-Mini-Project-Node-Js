@@ -43,3 +43,26 @@ exports.updatePasswordSchema = Joi.object({
     "any.required": "New password is required",
   }),
 });
+
+// Update user validation (Admin only)
+exports.updateUserSchema = Joi.object({
+  name: Joi.string().min(2).max(50).messages({
+    "string.min": "Name must be at least 2 characters long",
+    "string.max": "Name cannot exceed 50 characters",
+  }),
+  email: Joi.string().email().messages({
+    "string.email": "Please provide a valid email address",
+  }),
+  role: Joi.string().valid("Admin", "Manager", "Staff"),
+  isActive: Joi.boolean(),
+});
+
+// MongoDB ObjectId validation
+exports.idSchema = Joi.object({
+  id: Joi.string()
+    .pattern(/^[0-9a-fA-F]{24}$/)
+    .required()
+    .messages({
+      "string.pattern.base": "Invalid ID format",
+    }),
+});
