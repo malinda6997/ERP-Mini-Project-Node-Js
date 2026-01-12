@@ -30,7 +30,14 @@ exports.inventorySchema = Joi.object({
     "any.required": "Unit price is required",
   }),
   category: Joi.string()
-    .valid("Raw Material", "Finished Goods", "Components", "Supplies", "Food & Beverage", "Other")
+    .valid(
+      "Raw Material",
+      "Finished Goods",
+      "Components",
+      "Supplies",
+      "Food & Beverage",
+      "Other"
+    )
     .default("Other"),
   reorderLevel: Joi.number().min(0).default(10),
   supplier: Joi.string()
