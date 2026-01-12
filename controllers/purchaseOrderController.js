@@ -130,6 +130,12 @@ exports.createPurchaseOrder = asyncHandler(async (req, res) => {
     });
   }
 
+  // Calculate total amount
+  const totalAmount = enrichedItems.reduce(
+    (sum, item) => sum + item.totalPrice,
+    0
+  );
+
   // Generate PO number
   const poNumber = await PurchaseOrder.generatePONumber();
 
@@ -138,6 +144,7 @@ exports.createPurchaseOrder = asyncHandler(async (req, res) => {
     poNumber,
     supplier,
     items: enrichedItems,
+    totalAmount,
     expectedDeliveryDate,
     notes,
     createdBy: req.user.id,
@@ -200,12 +207,19 @@ exports.updatePurchaseOrder = asyncHandler(async (req, res) => {
     }
   }
 
+  // Calculate total amount
+  const totalAmount = enrichedItems.reduce(
+    (sum, item) => sum + item.totalPrice,
+    0
+  );
+
   // Update purchase order
   purchaseOrder = await PurchaseOrder.findByIdAndUpdate(
     req.params.id,
     {
       supplier: supplier || purchaseOrder.supplier,
       items: enrichedItems,
+      totalAmount,
       expectedDeliveryDate:
         expectedDeliveryDate || purchaseOrder.expectedDeliveryDate,
       notes: notes !== undefined ? notes : purchaseOrder.notes,
